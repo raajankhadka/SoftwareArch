@@ -12,7 +12,7 @@ string price;
 int quantity;
 
 
-bool login(string userName, string password)
+bool login(string &loginName)
 {
 	ifstream inFile;
 	inFile.open("TextFile1.txt");
@@ -21,20 +21,30 @@ bool login(string userName, string password)
 		cerr << "Error Opening File" << endl;
 		exit(1);
 	}
+
+	string userName, password;
+	cout << endl;
+	cout << "Username : ";
+	cin >> userName;
+	cout << endl;
+	cout << "Password : ";
+	cin >> password;
+
 	string n, p;
 	inFile >> n >> p;
 	if (n == userName && p == password)
 	{
+		loginName = userName;
 		return true;
 	}
-	else
-		cout << "login failure";
+	cout << endl << "Login failure, please try again." << endl;
+	return false;
 }
 
 
 
-void dispaly(string n[],string d[],string p[]) {
-
+void display(string n[],string d[],string p[]) {
+	cout << "Here are some items we thought you might like:" << endl << endl;
 	for (int i = 0; i < 5; i++) {
 		cout << left << setw(8) << n[i] << setw(30) << d[i] << setw(11) << p[i] << endl;
 	}
@@ -54,15 +64,18 @@ int main() {
 	string name;
 	string description;
 	string price;
-	string userName, password, item;
+	string item;
+	string user;
 	char ans;
 	int itemQuantity;
-	cout << "Username : ";
-	cin >> userName;
-	cout << endl;
-	cout << "Password : ";
-	cin >> password;
 	
+	while (true) {
+		if (login(user)) {
+			break;
+		}
+	}
+
+	cout << endl << "Hi " << user << ". " << "You have successfully logged in, please enjoy shopping with us." << endl << endl;
 
 	ifstream infile4("householdItem.txt");
 	while (!infile4.eof())
@@ -75,9 +88,8 @@ int main() {
 		p[size] = price;
 		++size;	
 	}
-	
-	if (login(userName, password))
-		dispaly(n, d, p);
+
+	display(n, d, p);
 
 	cout << "Do you want to buy any of those items (Y/N) : ";
 	cin >> ans;
