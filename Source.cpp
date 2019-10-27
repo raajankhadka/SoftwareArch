@@ -46,7 +46,7 @@ bool login(string &loginName)
 void display(string n[],string d[],string p[],string q[],int size) {
 	cout << "Here are some items we thought you might like:" << endl << endl;
 	for (int i = 0; i < size; i++) {
-		cout << left << setw(10) << n[i] << setw(30) << d[i] << setw(11) << p[i] << setw(10) << q[i] << endl;
+		cout << left << setw(10) << n[i] << setw(30) << d[i] << setw(1) << "$" << setw(11) << p[i] << setw(10) << q[i] << endl;
 	}
 	cout << endl;
 
@@ -60,7 +60,8 @@ void cart(string cn, string cd, string cp, int itemQuantity) {
 
 int main() {
 	int size = 0;
-	string n[100], d[100] ,p[100], q[100];
+	string n[100], d[100], p[100], q[100];
+	int buy[100] = { 0 };
 	string cn, cd, cp;
 	string name;
 	string description;
@@ -69,6 +70,7 @@ int main() {
 	string item;
 	string user;
 	string logout;
+	string navigation;
 	char ans;
 	int itemQuantity;
 	float total = 777;
@@ -97,32 +99,76 @@ int main() {
 	}
 
 	while (true) {
-		display(n, d, p, q, size);
+		cout << endl << "Enter S to shop, C to view cart, R to remove items, B to buy, or L to logout" << endl;
+		cin >> navigation;
 
-		cout << "Do you want to buy any of those items (Y/N) : ";
-		cin >> ans;
-		if (ans == 'Y')
-		{
-			cout << "\n What item do you want to buy : ";
-			cin >> item;
-			cout << "\n What quantity do you want to buy : ";
-			cin >> itemQuantity;
-			break;
+		if (navigation == "S") {
+			display(n, d, p, q, size);
+
+			cout << "Do you want to buy any of those items (Y/N) : ";
+			cin >> ans;
+			if (ans == 'Y')
+			{
+				cout << "\n What item do you want to buy : ";
+				cin >> item;
+				cout << "\n What quantity do you want to buy : ";
+				cin >> itemQuantity;
+				for (int j = 0; j < size; j++) {
+					if (item == n[j]) {
+						if (stoi(q[j]) < itemQuantity) {
+							cout << endl << "This exceeds amount available to purchase." << endl;
+						}
+						else {
+							buy[j] = itemQuantity;
+							cout << endl << "Added to cart." << endl;
+						}
+					}
+				}
+			}
 		}
-		else {
-			cout << "Enter C to continue shopping or anything else to logout";
-			cin >> logout;
-			if (logout != "C") {
-				exit(1);
+		if (navigation == "L") {
+			exit(1);
+		}
+		if (navigation == "C") {
+			float grand_total = 0;
+			cout << endl << "Cart:" << endl;
+			for (int j = 0; j < size; j++) {
+				if (0 != buy[j]) {
+					float total = stoi(p[j]) * itemQuantity;
+					grand_total = grand_total + total;
+					cout << "Item: " << n[j] << "  Quantity: " << buy[j] << "  Cost: $" << total << endl;
+				}
+			}
+			cout << "Total Cost: $" << grand_total;
+		}
+		if (navigation == "R") {
+			cout << endl << "Enter name of item to remove from cart: ";
+			string item_to_remove;
+			cin >> item_to_remove;
+			for (int j = 0; j < size; j++) {
+				if (item_to_remove == n[j]) {
+					buy[j] = 0;
+				}
+			}
+		}
+		if (navigation == "B") {
+			string shipping_address;
+			string credit_card;
+			string confirm;
+			cout << endl << "Please enter shipping address: ";
+			cin >> shipping_address;
+			cout << endl << "Please enter credit card number: ";
+			cin >> credit_card;
+			cout << endl << "Confirm Purchase? (Y/N) ";
+			cin >> confirm;
+			if (confirm == "Y") {
+				cout << endl << "Confirm!" << endl;
+			}
+			else {
+				cout << endl << "Order Canceled." << endl;
 			}
 		}
 	}
 
-	cout << endl;
-	for (int j = 0; j < size; j++) {
-		if (item == n[j]) {
-			//float total = p[j] * itemQuantity;
-			cout << "Cart:  " << "Item: " << n[j] << "  Quantity: " << itemQuantity << "  Total: $" << total;
-		}
-	}
+	
 }
