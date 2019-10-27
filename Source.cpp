@@ -56,7 +56,7 @@ void archiveOrder(string user, string grand_total, string card, string address, 
 void display(string n[],string d[],string p[],string q[],int size) {
 	cout << "Here are some items we thought you might like:" << endl << endl;
 	for (int i = 0; i < size; i++) {
-		cout << left << setw(10) << n[i] << setw(30) << d[i] << setw(1) << "$" << setw(11) << p[i] << setw(10) << q[i] << endl;
+		cout << left << setw(15) << n[i] << setw(30) << d[i] << setw(1) << "$" << setw(11) << p[i] << setw(10) << q[i] << endl;
 	}
 	cout << endl;
 
@@ -183,6 +183,9 @@ int main() {
 			if (confirm == "Y") {
 				archiveOrder(user, to_string(grand_total), credit_card, shipping_address, size, n, p, buy);
 				cout << endl << "Order Processed!" << endl;
+				for (int j = 0; j < size; j++) {
+					q[j] = to_string(stoi(q[j]) - buy[j]);
+				}
 				fill(begin(buy), end(buy), 0);
 			}
 			else {
