@@ -41,7 +41,17 @@ bool login(string &loginName)
 	return false;
 }
 
-
+void archiveOrder(string user, string grand_total, string card, string address, int size, string n[100], string p[100], int buy[100]) {
+	ofstream outfile;
+	outfile.open("OrderHistory.txt", std::ios_base::app);
+	outfile << user << "," << grand_total << "," << card << "," << address << ",";
+	for (int j = 0; j < size; j++) {
+		if (0 != buy[j]) {
+			outfile << n[j] << "," << p[j] << "," << to_string(buy[j]) << ";";
+		}
+	}
+	outfile << endl;
+}
 
 void display(string n[],string d[],string p[],string q[],int size) {
 	cout << "Here are some items we thought you might like:" << endl << endl;
@@ -71,9 +81,12 @@ int main() {
 	string user;
 	string logout;
 	string navigation;
+	string user_found;
+	string order_description;
 	char ans;
 	int itemQuantity;
-	float total = 777;
+	float grand_total = 0;
+	float total;
 	
 	while (true) {
 		if (login(user)) {
@@ -99,7 +112,7 @@ int main() {
 	}
 
 	while (true) {
-		cout << endl << "Enter S to shop, C to view cart, R to remove items, B to buy, or L to logout" << endl;
+		cout << endl << "Enter S to shop, C to view cart, R to remove items, B to buy, V to view order history, or L to logout" << endl;
 		cin >> navigation;
 
 		if (navigation == "S") {
@@ -130,11 +143,11 @@ int main() {
 			exit(1);
 		}
 		if (navigation == "C") {
-			float grand_total = 0;
+			grand_total = 0;
 			cout << endl << "Cart:" << endl;
 			for (int j = 0; j < size; j++) {
 				if (0 != buy[j]) {
-					float total = stoi(p[j]) * itemQuantity;
+					total = stoi(p[j]) * itemQuantity;
 					grand_total = grand_total + total;
 					cout << "Item: " << n[j] << "  Quantity: " << buy[j] << "  Cost: $" << total << endl;
 				}
@@ -157,18 +170,37 @@ int main() {
 			string confirm;
 			cout << endl << "Please enter shipping address: ";
 			cin >> shipping_address;
-			cout << endl << "Please enter credit card number: ";
-			cin >> credit_card;
+			while (true) {
+				cout << endl << "Please enter 10-digit OSC card number: ";
+				cin >> credit_card;
+				if (credit_card.length() == 10) {
+					break;
+				}
+				cout << endl << "Number not 10 digits long, please try again" << endl;
+			}
 			cout << endl << "Confirm Purchase? (Y/N) ";
 			cin >> confirm;
 			if (confirm == "Y") {
-				cout << endl << "Confirm!" << endl;
+				archiveOrder(user, to_string(grand_total), credit_card, shipping_address, size, n, p, buy);
+				cout << endl << "Order Processed!" << endl;
+				fill(begin(buy), end(buy), 0);
 			}
 			else {
 				cout << endl << "Order Canceled." << endl;
 			}
 		}
+		if (navigation == "V") {
+			ifstream infile4("OrderHistory.txt");
+			cout << endl << "Order history format is total purchase price, card number, address, then items bought. Items bought are in format item name, price, quantity bought. Each order is shown on a new line." << endl << endl;
+			while (!infile4.eof())
+			{
+				getline(infile4, user_found, ',');
+				getline(infile4, order_description, '\n');
+				if (user_found == user) {
+					cout << order_description << endl;
+				}
+			}
+			cout << endl;
+		}
 	}
-
-	
 }
