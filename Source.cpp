@@ -43,31 +43,35 @@ bool login(string &loginName)
 
 
 
-void display(string n[],string d[],string p[]) {
+void display(string n[],string d[],string p[],string q[],int size) {
 	cout << "Here are some items we thought you might like:" << endl << endl;
-	for (int i = 0; i < 5; i++) {
-		cout << left << setw(8) << n[i] << setw(30) << d[i] << setw(11) << p[i] << endl;
+	for (int i = 0; i < size; i++) {
+		cout << left << setw(10) << n[i] << setw(30) << d[i] << setw(11) << p[i] << setw(10) << q[i] << endl;
 	}
+	cout << endl;
 
 }
 void cart(string cn, string cd, string cp, int itemQuantity) {
 
 	cout << "Your items in the cart are : " << endl;
-	cout << left << setw(8) << cn<< setw(30) << cd << setw(11) << cp <<setw(10)<<itemQuantity<< endl;
+	cout << setw(8) << left << cn << setw(30) << cd << setw(11) << cp <<setw(10)<<itemQuantity<< endl;
 }
 
 
 int main() {
 	int size = 0;
-	string n[100], d[100],p[100];
+	string n[100], d[100] ,p[100], q[100];
 	string cn, cd, cp;
 	string name;
 	string description;
 	string price;
+	string quant;
 	string item;
 	string user;
+	string logout;
 	char ans;
 	int itemQuantity;
+	float total = 777;
 	
 	while (true) {
 		if (login(user)) {
@@ -83,36 +87,42 @@ int main() {
 		getline(infile4, name, ',');
 		getline(infile4, description, ',');
 		getline(infile4, price, ',');
+		getline(infile4, quant, '\n');
 		n[size] = name;
 		d[size] = description;
 		p[size] = price;
-		++size;	
+		q[size] = quant;
+
+		++size;
 	}
 
-	display(n, d, p);
+	while (true) {
+		display(n, d, p, q, size);
 
-	cout << "Do you want to buy any of those items (Y/N) : ";
-	cin >> ans;
-	if (ans == 'Y')
-	{
-		cout << "\n What item do you want to buy : ";
-		cin >> item;
-		cout << "\n What quantity do you want to buy : ";
-		cin >> itemQuantity;
+		cout << "Do you want to buy any of those items (Y/N) : ";
+		cin >> ans;
+		if (ans == 'Y')
+		{
+			cout << "\n What item do you want to buy : ";
+			cin >> item;
+			cout << "\n What quantity do you want to buy : ";
+			cin >> itemQuantity;
+			break;
+		}
+		else {
+			cout << "Enter C to continue shopping or anything else to logout";
+			cin >> logout;
+			if (logout != "C") {
+				exit(1);
+			}
+		}
 	}
 
-
-	
-	for (int j = 0; j < 5; j++) {
-		//if (item == n[j])
-			//cout <<n[j];
-		/*{
-			cn = n[j];
-			cd = d[j];
-			cp = p[j];
-			cart(cn, cd, cp, itemQuantity);
-		}*/
-		if(item.compare(n[j])!=0)
-			cout << n[j];
+	cout << endl;
+	for (int j = 0; j < size; j++) {
+		if (item == n[j]) {
+			//float total = p[j] * itemQuantity;
+			cout << "Cart:  " << "Item: " << n[j] << "  Quantity: " << itemQuantity << "  Total: $" << total;
+		}
 	}
 }
