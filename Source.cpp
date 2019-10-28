@@ -131,7 +131,7 @@ int main() {
 			cin >> ans;
 			if (ans == 'Y')
 			{
-				cout << "\n What item do you want to buy : ";
+				cout << "\n What item do you want to buy : ";  //adressing the user to buy items
 				cin >> item;
 				cout << "\n What quantity do you want to buy : ";
 				cin >> itemQuantity;
