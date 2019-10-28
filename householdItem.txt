@@ -1,12 +1,12 @@
 tv,big screen,250,3
 radio,super loud,50,4
 phone,smart,500,5
-software book,informative,100,15
-carpentry book,original,50,7
+software-book,informative,100,15
+carpentry-book,original,50,7
 cookbook,delicious,30,70
 doll,cute,10,6
 toy-car,fast,5,100
-action figure,cool,12,50
+action-figure,cool,12,50
 camera,accurate,200,3
 toothbrush,healthy,3,100
 paperclip,simple,1,50
