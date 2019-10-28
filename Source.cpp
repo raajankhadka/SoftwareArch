@@ -2,17 +2,23 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
-#include <sstream>
-
+#define null 0
 
 using namespace std;
+
 string name;
 string description;
 string price;
+string n[100], d[100], p[100];
+string tn[100], td[100], tp[100];
+string cn, cd, cp;
+int total;
 int quantity;
-
-
-bool login(string &loginName)
+int itemQuantity[50];
+int s;
+int size2 = 0;
+char cont;
+bool login(string userName, string password)
 {
 	ifstream inFile;
 	inFile.open("TextFile1.txt");
@@ -21,189 +27,183 @@ bool login(string &loginName)
 		cerr << "Error Opening File" << endl;
 		exit(1);
 	}
+	string n, p;
+	inFile >> n >> p;
+	if (n == userName && p == password)
+	{
+		return true;
+	}
+	else
+		return false;
+}
 
+
+
+void dispaly(string n[],string d[],string p[]) {
+
+	for (int i = 0; i < 6; i++) {
+		cout << left << setw(8) << n[i] << setw(30) << d[i] << setw(11) << p[i] << endl;
+	}
+
+}
+void cart(int itemQuantity[]) {
+	
+}
+void viewCart()
+{
+	cout << "Your Updated cart: " << endl;
+	cout << "\n";
+	cout << "\n";
+	cout << left << setw(8) << "Item" << setw(30) << "Description" << setw(11) << "Price" << setw(10) << "Item Quantity" << endl;
+	
+	for (int j = 0; j < size2; j++)
+	{
+		cout << left << setw(8) << tn[j] << setw(30) << td[j] << setw(11) << tp[j] << setw(10) << itemQuantity[j] << endl;
+		int price = stoi(tp[j]);
+		total = price * itemQuantity[j];
+	}
+	cout << "total : " <<total<< endl;
+}
+
+void removeFromCart(string removeName) {
+
+	for (int i = 0; i < size2; i++) {
+
+		if (tn[i].find(removeName, 0) != std::string::npos)
+		{
+			for (int j = i; j < (size2 - 1); j++)
+			{
+				tn[j] = tn[j + 1];
+				td[j] = td[j + 1];
+				tp[j] = tp[j + 1];
+			}
+			size2--;
+		}
+		viewCart();
+	}
+
+}
+void checkout()
+{
+	string cName;
+	string cShippingAddress;
+	string cNumber;
+	cout << "\n";
+	cout << "\n";
+	cout << "\n";
+	cout << "Please enter your name: ";
+	cin >> cName;
+	cout << "\n Enter your shipping address: ";
+	cin >> cShippingAddress;
+	cout << "\n Enter your creditcard info: ";
+	cin >> cNumber;
+	cout << "********************************************************************************************************************" << endl;
+	cout << "********************************************Receipt*******************************************************************" << endl;
+	cout << "\n";
+	cout << "\n";
+	cout << "\n";
+	cout << left << setw(8) << "Name: "<<cName<<endl;
+	cout << left << setw(8) << "Shipping Address: " << cShippingAddress<<endl;
+	cout << left << setw(8) << "Your total: " << total << endl;
+	cout << left << setw(8) << "Your credit card with numbers " << cNumber << " was charged $" << total << endl;
+
+}
+
+
+int main() {
+
+	int size = 0;
+	
+	string item;
 	string userName, password;
-	cout << endl;
+	string addName, removeName;
+
+	char ans;
+	int Quantity;
+	int numAns;
 	cout << "Username : ";
 	cin >> userName;
 	cout << endl;
 	cout << "Password : ";
 	cin >> password;
 
-	string n, p;
-	inFile >> n >> p;
-	if (n == userName && p == password)
-	{
-		loginName = userName;
-		return true;
-	}
-	cout << endl << "Login failure, please try again." << endl;
-	return false;
-}
-
-void archiveOrder(string user, string grand_total, string card, string address, int size, string n[100], string p[100], int buy[100]) {
-	ofstream outfile;
-	outfile.open("OrderHistory.txt", std::ios_base::app);
-	outfile << user << "," << grand_total << "," << card << "," << address << ",";
-	for (int j = 0; j < size; j++) {
-		if (0 != buy[j]) {
-			outfile << n[j] << "," << p[j] << "," << to_string(buy[j]) << ";";
-		}
-	}
-	outfile << endl;
-}
-
-void display(string n[],string d[],string p[],string q[],int size) {
-	cout << "Here are some items we thought you might like:" << endl << endl;
-	for (int i = 0; i < size; i++) {
-		cout << left << setw(15) << n[i] << setw(30) << d[i] << setw(1) << "$" << setw(11) << p[i] << setw(10) << q[i] << endl;
-	}
-	cout << endl;
-
-}
-void cart(string cn, string cd, string cp, int itemQuantity) {
-
-	cout << "Your items in the cart are : " << endl;
-	cout << setw(8) << left << cn << setw(30) << cd << setw(11) << cp <<setw(10)<<itemQuantity<< endl;
-}
-
-
-int main() {
-	int size = 0;
-	string n[100], d[100], p[100], q[100];
-	int buy[100] = { 0 };
-	string cn, cd, cp;
-	string name;
-	string description;
-	string price;
-	string quant;
-	string item;
-	string user;
-	string logout;
-	string navigation;
-	string user_found;
-	string order_description;
-	char ans;
-	int itemQuantity;
-	float grand_total = 0;
-	float total;
-	
-	while (true) {
-		if (login(user)) {
-			break;
-		}
-	}
-
-	cout << endl << "Hi " << user << ". " << "You have successfully logged in, please enjoy shopping with us." << endl << endl;
 
 	ifstream infile4("householdItem.txt");
 	while (!infile4.eof())
 	{
+		//getline(infile4, itemNumber, ',');
 		getline(infile4, name, ',');
 		getline(infile4, description, ',');
-		getline(infile4, price, ',');
-		getline(infile4, quant, '\n');
+		getline(infile4, price);
 		n[size] = name;
 		d[size] = description;
 		p[size] = price;
-		q[size] = quant;
-
 		++size;
 	}
 
+	while (s != true) {
+		s = login(userName, password);
+	}
+
+	dispaly(n, d, p);
+
+
+
 	while (true) {
-		cout << endl << "Enter S to shop, C to view cart, R to remove items, B to buy, V to view order history, or L to logout" << endl;
-		cin >> navigation;
+		cout << "Do you wan to add any of those items to your cart(Y/N): ";
+		cin >> ans;
+		if (toupper(ans) == 'Y')
+		{
+			cout << "\n What item do you want to buy: ";
+			cin >> item;
 
-		if (navigation == "S") {
-			display(n, d, p, q, size);
+			cout << "What quantity do you want to buy : ";
+			cin >> Quantity;
+			for (int i = 0; i < 6; i++) {
 
-			cout << "Do you want to buy any of those items (Y/N) : ";
-			cin >> ans;
-			if (ans == 'Y')
+				if (n[i].find(item, 0) != std::string::npos)
+				{
+					cn = n[i];
+					tn[size2] = cn;
+					cd = d[i];
+					td[size2] = cd;
+					cp = p[i];
+					tp[size2] = cp;
+					
+					itemQuantity[size2] = Quantity;
+					size2++;
+					
+				}
+			}
+		}
+		else
+		{
+			cout << " Press (1) to view your cart" << endl;
+			cout << "press (2) to delete/edit your cart" << endl;
+			cout << "press(3) to checkout" << endl;
+			cout << "press(4) to exit" << endl;
+			cout << "What do you want to do? : ";
+			cin >> numAns;
+			switch (numAns)
 			{
-				cout << "\n What item do you want to buy : ";
-				cin >> item;
-				cout << "\n What quantity do you want to buy : ";
-				cin >> itemQuantity;
-				for (int j = 0; j < size; j++) {
-					if (item == n[j]) {
-						if (stoi(q[j]) < itemQuantity) {
-							cout << endl << "This exceeds amount available to purchase." << endl;
-						}
-						else {
-							buy[j] = itemQuantity;
-							cout << endl << "Added to cart." << endl;
-						}
-					}
-				}
+			case 1:
+				viewCart();
+				break;
+			case 2:
+				cout << "Which item do you want to delete: ";
+				cin >> removeName;
+				removeFromCart(removeName);
+				break;
+			case 3:
+				checkout();
+				break;
+			case 4:
+				exit(1);
+				break;
+			default:
+				break;
 			}
 		}
-		if (navigation == "L") {
-			exit(1);
-		}
-		if (navigation == "C") {
-			grand_total = 0;
-			cout << endl << "Cart:" << endl;
-			for (int j = 0; j < size; j++) {
-				if (0 != buy[j]) {
-					total = stoi(p[j]) * itemQuantity;
-					grand_total = grand_total + total;
-					cout << "Item: " << n[j] << "  Quantity: " << buy[j] << "  Cost: $" << total << endl;
-				}
-			}
-			cout << "Total Cost: $" << grand_total;
-		}
-		if (navigation == "R") {
-			cout << endl << "Enter name of item to remove from cart: ";
-			string item_to_remove;
-			cin >> item_to_remove;
-			for (int j = 0; j < size; j++) {
-				if (item_to_remove == n[j]) {
-					buy[j] = 0;
-				}
-			}
-		}
-		if (navigation == "B") {
-			string shipping_address;
-			string credit_card;
-			string confirm;
-			cout << endl << "Please enter shipping address: ";
-			cin >> shipping_address;
-			while (true) {
-				cout << endl << "Please enter 10-digit OSC card number: ";
-				cin >> credit_card;
-				if (credit_card.length() == 10) {
-					break;
-				}
-				cout << endl << "Number not 10 digits long, please try again" << endl;
-			}
-			cout << endl << "Confirm Purchase? (Y/N) ";
-			cin >> confirm;
-			if (confirm == "Y") {
-				archiveOrder(user, to_string(grand_total), credit_card, shipping_address, size, n, p, buy);
-				cout << endl << "Order Processed!" << endl;
-				for (int j = 0; j < size; j++) {
-					q[j] = to_string(stoi(q[j]) - buy[j]);
-				}
-				fill(begin(buy), end(buy), 0);
-			}
-			else {
-				cout << endl << "Order Canceled." << endl;
-			}
-		}
-		if (navigation == "V") {
-			ifstream infile4("OrderHistory.txt");
-			cout << endl << "Order history format is total purchase price, card number, address, then items bought. Items bought are in format item name, price, quantity bought. Each order is shown on a new line." << endl << endl;
-			while (!infile4.eof())
-			{
-				getline(infile4, user_found, ',');
-				getline(infile4, order_description, '\n');
-				if (user_found == user) {
-					cout << order_description << endl;
-				}
-			}
-			cout << endl;
-		}
+
 	}
 }

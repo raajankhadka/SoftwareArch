@@ -1,13 +1,49 @@
-tv,big screen,250,3
-radio,super loud,50,4
-phone,smart,500,5
-software book,informative,100,15
-carpentry book,original,50,7
-cookbook,delicious,30,70
-doll,cute,10,6
-toy-car,fast,5,100
-action figure,cool,12,50
-camera,accurate,200,3
-toothbrush,healthy,3,100
-paperclip,simple,1,50
-storage-box,compact,10,20
+tv,big screen,250
+radio,super loud,50
+phone,smart,500
+lamp,bright and shining,10
+clock,loud alarm,20
+aluminum foil,thin size,12
+study table,plastic made,35
+tv table,wood made,45
+trash can,40 gallon,22
+mop,spin microfiber,29
+shoe rack,40 shoes capacity,38
+laundry dryer,small and portable,100
+bed frame,metal vintage,120
+Lysol,multi purpose cleaner, 15
+microwave, small with smart sensor,60
+toaster, 4 extra wide slots,39
+design patterns,software engineering,55
+programming pearls,computer science,80
+refactoring,information technology,99
+clean code,computer engineering,89
+think and grow rich,business major,49
+the E myth,business administration,69
+zero to one,business and finance,55
+the sonnets of Shakespeare,love and romance,39
+pride and prejudice,love and romance,55
+outlander,love and romance,29
+infrared laser tag,four players,42
+3D pen set, arts and crafts,49
+spiderman figure,medium size,25
+karaoke microphone,wireless for kids,32
+stunt car,girls and boys toy,15
+walkie takies,long range for kids,20
+drone,remote control,89
+superman figure,large size,99
+tablet,7 inch display,99
+macbook pro,2019 latest,1800
+iphone 11,pro max 250 gb,1250
+samsung note 10,8 gb ram,1199
+apple computer,27 inch,1799
+ipad,10.2 inch,300
+Samsung tv,55 inch,550
+Bluetooth speaker,google assistant,200
+samsung watch,gear 3,350
+apple watch,series 4,400
+xbox one,500 gb,250
+echo dot,third gen,49
+beats by DRE,solo3 wireless,159
+Nikon camera,D5300,1300
+
