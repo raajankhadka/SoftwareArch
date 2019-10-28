@@ -36,7 +36,7 @@ bool login(string &loginName)
 	cout << "Password : ";
 	cin >> password;
 
-	
+
 
 	string n, p;
 	inFile >> n >> p;
@@ -61,7 +61,7 @@ void archiveOrder(string user, string grand_total, string card, string address, 
 	outfile << endl;
 }
 
-void display(string n[],string d[],string p[],string q[],int size) {
+void display(string n[],string d[],string p[],string q[],int size) {   // The display will set up the items to be in order
 	cout << "Here are some items we thought you might like:" << endl << endl;
 	for (int i = 0; i < size; i++) {
 		cout << left << setw(15) << n[i] << setw(30) << d[i] << setw(1) << "$" << setw(11) << p[i] << setw(10) << q[i] << endl;
@@ -74,7 +74,7 @@ void cart(string cn, string cd, string cp, int itemQuantity) {
 	cout << "Your items in the cart are : " << endl;
 	cout << setw(8) << left << cn << setw(30) << cd << setw(11) << cp <<setw(10)<<itemQuantity<< endl;
 }
-
+ //Items in the cart are 
 
 int main() {
 	int size = 0;
