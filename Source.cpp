@@ -11,16 +11,22 @@ string description;
 string price;
 int quantity;
 
+//declaring all type variables for the functionality 
+
 
 bool login(string &loginName)
 {
 	ifstream inFile;
 	inFile.open("TextFile1.txt");
 
+
+
 	if (inFile.fail()) {
 		cerr << "Error Opening File" << endl;
 		exit(1);
 	}
+
+// set up parameter for username and password for the login
 
 	string userName, password;
 	cout << endl;
@@ -29,6 +35,8 @@ bool login(string &loginName)
 	cout << endl;
 	cout << "Password : ";
 	cin >> password;
+
+	
 
 	string n, p;
 	inFile >> n >> p;
