@@ -102,8 +102,10 @@ int main() {
 			break;
 		}
 	}
-
+        
 	cout << endl << "Hi " << user << ". " << "You have successfully logged in, please enjoy shopping with us." << endl << endl;
+
+
 
 	ifstream infile4("householdItem.txt");
 	while (!infile4.eof())
@@ -147,9 +149,13 @@ int main() {
 					}
 				}
 			}
+			// User has to input S- to shop
+			//C-view cart
+			// R to remove items
 		}
 		if (navigation == "L") {
 			exit(1);
+			//
 		}
 		if (navigation == "C") {
 			grand_total = 0;
@@ -213,6 +219,8 @@ int main() {
 				}
 			}
 			cout << endl;
+
+
 		}
 	}
 }
