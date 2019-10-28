@@ -74,7 +74,7 @@ void cart(string cn, string cd, string cp, int itemQuantity) {
 	cout << "Your items in the cart are : " << endl;
 	cout << setw(8) << left << cn << setw(30) << cd << setw(11) << cp <<setw(10)<<itemQuantity<< endl;
 }
- //Items in the cart are 
+ //Items in the cart are shown with the quantity
 
 int main() {
 	int size = 0;
@@ -86,6 +86,7 @@ int main() {
 	string price;
 	string quant;
 	string item;
+	//string new; 
 	string user;
 	string logout;
 	string navigation;
