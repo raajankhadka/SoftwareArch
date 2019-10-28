@@ -163,7 +163,7 @@ int main() {
 			}
 			cout << "Total Cost: $" << grand_total;
 		}
-		if (navigation == "R") {
+		if (navigation == "R") {    //This condition checks the item to be removed from cart
 			cout << endl << "Enter name of item to remove from cart: ";
 			string item_to_remove;
 			cin >> item_to_remove;
